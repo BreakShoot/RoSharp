@@ -13,5 +13,4 @@ do it externally in C#.
 
 ## What are the goals for this project?
   - Eventually release a library for people to create and call Lua functions on the fly
-  - Create a working retcheck bypass (urgent)
   - Provide affective documentation
