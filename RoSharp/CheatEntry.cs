@@ -17,15 +17,19 @@ namespace RoSharp
 
         public void Initialize()
         {
-            
+            //example forcefield
 
-            while (true)
-            {
-                string input = Console.ReadLine();
-                robloxLuaState.GetGlobal("print");
-                robloxLuaState.PushString(input);
-                robloxLuaState.Call(1, 0);
-            }
+
+            robloxLuaState.GetGlobal("Instance");
+            robloxLuaState.GetField(-1, "new");
+            robloxLuaState.PushString("ForceField");
+            robloxLuaState.Call(1, 1);
+
+            robloxLuaState.GetGlobal("game");
+            robloxLuaState.GetField(-1, "Players");
+            robloxLuaState.GetField(-1, "LocalPlayer");
+            robloxLuaState.GetField(-1, "Character");
+            robloxLuaState.SetField(-5, "Parent");
         }
     }
 }

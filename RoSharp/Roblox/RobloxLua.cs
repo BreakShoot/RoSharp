@@ -22,6 +22,9 @@ namespace RoSharp.Roblox
         public void GetField(int index, string input)
             => _rsharp[Offsets.GlobalAddressTable["GetField"].AddressValue, false].Execute(Offsets.GlobalAddressTable["GetField"].CallingConvetion, _luaState, index, input);
 
+        public void SetField(int index, string input)
+            => _rsharp[Offsets.GlobalAddressTable["SetField"].AddressValue, false].Execute(Offsets.GlobalAddressTable["SetField"].CallingConvetion, _luaState, index, input);
+
         public void PushString(string input)
             => _rsharp[Offsets.GlobalAddressTable["PushString"].AddressValue].Execute(Offsets.GlobalAddressTable["PushString"].CallingConvetion, _luaState, input);
 

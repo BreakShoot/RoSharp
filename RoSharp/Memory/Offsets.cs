@@ -10,6 +10,7 @@ namespace RoSharp.Memory
             {"ScriptContext", new Address(0x188B89C, CallingConventions.Cdecl, false, false)},
             {"GetField", new Address(0x4BCFA0, CallingConventions.Cdecl)},
             {"PushString", new Address(0x4BE580, CallingConventions.Fastcall, false)},
+            {"SetField", new Address(0x4BF050, CallingConventions.Fastcall)},
             {"Call", new Address(0x4BC9E0, CallingConventions.Cdecl)}
         };
     }
