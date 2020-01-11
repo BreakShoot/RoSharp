@@ -16,6 +16,10 @@ namespace RoSharp.Roblox
             _luaState = _rsharp.GetLuaState();
         }
 
+        public void SetIdentity(int identity)
+        {
+            _rsharp[(IntPtr)(_rsharp[_luaState + 136, false].Read<int>() + 24), false].Write(6);
+        }
         public void GetGlobal(string input)
             => GetField(-10002, input);
 

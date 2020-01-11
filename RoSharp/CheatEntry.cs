@@ -17,9 +17,13 @@ namespace RoSharp
 
         public void Initialize()
         {
+            //printidentity
+            robloxLuaState.SetIdentity(6);
+            robloxLuaState.GetGlobal("spawn");
+            robloxLuaState.GetGlobal("printidentity");
+            robloxLuaState.Call(1, 0);
+
             //example forcefield
-
-
             robloxLuaState.GetGlobal("Instance");
             robloxLuaState.GetField(-1, "new");
             robloxLuaState.PushString("ForceField");
