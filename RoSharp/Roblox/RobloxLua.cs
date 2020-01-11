@@ -12,6 +12,7 @@ namespace RoSharp.Roblox
         public RobloxLua(Process process, IntPtr baseAddress)
         {
             _rsharp = new RobloxSharp(process, baseAddress);
+            _rsharp.CleanAddresses();
             _luaState = _rsharp.GetLuaState();
         }
 
@@ -19,15 +20,15 @@ namespace RoSharp.Roblox
             => GetField(-10002, input);
 
         public void GetField(int index, string input)
-            => _rsharp[Offsets.lua_getfield_address.AddressValue].Execute<int>(Offsets.lua_getfield_address.CallingConvetion, _luaState, index, input);
+            => _rsharp[Offsets.GlobalAddressTable["GetField"].AddressValue, false].Execute(Offsets.GlobalAddressTable["GetField"].CallingConvetion, _luaState, index, input);
 
         public void PushString(string input)
-            => _rsharp[Offsets.lua_pushstring_address.AddressValue].Execute(Offsets.lua_pushstring_address.CallingConvetion, _luaState, input);
+            => _rsharp[Offsets.GlobalAddressTable["PushString"].AddressValue].Execute(Offsets.GlobalAddressTable["PushString"].CallingConvetion, _luaState, input);
 
         public void PushNil()
-            => _rsharp[Offsets.lua_pushstring_address.AddressValue].Execute(Offsets.lua_pushstring_address.CallingConvetion, _luaState, 0);
+            => _rsharp[Offsets.GlobalAddressTable["PushString"].AddressValue].Execute(Offsets.GlobalAddressTable["PushString"].CallingConvetion, _luaState, 0);
 
         public void Call(int a, int b)
-            => _rsharp[Offsets.lua_call_address.AddressValue].Execute(Offsets.lua_call_address.CallingConvetion, _luaState, a, b);
+            => _rsharp[Offsets.GlobalAddressTable["Call"].AddressValue, false].Execute(Offsets.GlobalAddressTable["Call"].CallingConvetion, _luaState, a, b);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using RoSharp;
 
 namespace KeksV5
@@ -16,6 +17,7 @@ namespace KeksV5
 
             processWatcher.Created += (sender, process) =>
             {
+                Thread.Sleep(4000);
                 Logger.Log(Logger.LogType.SUCCESS, "Successfully located ROBLOX process!");
                 new CheatEntry(process).Initialize();
             };

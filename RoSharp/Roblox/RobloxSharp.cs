@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Binarysharp.MemoryManagement;
 using Binarysharp.MemoryManagement.Memory;
@@ -28,8 +29,6 @@ namespace RoSharp.Roblox
 
         public int FixAddress(int Address)
             => Address - _referencedBaseAddress.ToInt32() + this.Native.MainModule.BaseAddress.ToInt32();
-
-
         public RemotePointer this[int address] => new RemotePointer(this, (IntPtr)FixAddress(address));
         public RemotePointer this[IntPtr address] => new RemotePointer(this, (IntPtr)FixAddress(address.ToInt32()));
 
@@ -56,7 +55,7 @@ namespace RoSharp.Roblox
                 {
                     sigScan.Address = offset;
                     sigScan.Size = mbi.RegionSize;
-                    IntPtr result = sigScan.FindPattern(BitConverter.ToString(BitConverter.GetBytes(FixAddress(Offsets.scriptcontext_address.AddressValue.ToInt32()))).Replace("-", " "));
+                    IntPtr result = sigScan.FindPattern(BitConverter.ToString(BitConverter.GetBytes(FixAddress(Offsets.GlobalAddressTable["ScriptContext"].AddressValue.ToInt32()))).Replace("-", " "));
                     sigScan.ResetRegion();
                     if (result != IntPtr.Zero)
                     {
@@ -163,8 +162,6 @@ namespace RoSharp.Roblox
 
             if (scriptContextPtr != IntPtr.Zero)
             {
-                //(v2 + 172 + 56 * v3) ^ *(_DWORD *)(v2 + 172 + 56 * v3);
-                //
                 IntPtr LuaState = (IntPtr)(IntPtr.Add(scriptContextPtr, 172).ToInt32() ^ this[scriptContextPtr + 172, false].Read<int>());
 #if DEBUG_ROBLOX
                 Logger.Log(Logger.LogType.SUCCESS, "Successfully grabbed LuaState! LS: 0x{0:X}", LuaState.ToInt32());
@@ -182,11 +179,19 @@ namespace RoSharp.Roblox
 
         public void CleanAddresses()
         {
-            //foreach (FieldInfo field in typeof(Offsets).GetFields(BindingFlags.Public | BindingFlags.Static))
-            //{
-            //    if (((Address)field.GetValue(null)).RemoveRetcheck)
-            //        field.SetValue(null, this.RemoveReturnCheck(((Address)field.GetValue(null)).AddressValue));
-            //}
+#if DEBUG_ROBLOX
+            Logger.Log(Logger.LogType.WORK, "Cleaning addresses! This may take a while!");
+#endif
+
+            foreach (Address address in Offsets.GlobalAddressTable.Values)
+            {
+                if (address.RemoveRetcheck)
+                    address.AddressValue = this.RemoveReturnCheck(address.AddressValue);
+            }
+
+#if DEBUG_ROBLOX
+            Logger.Log(Logger.LogType.WORK, "Finished cleaning addresses!");
+#endif
         }
     }
 }

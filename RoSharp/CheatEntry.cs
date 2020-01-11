@@ -11,16 +11,21 @@ namespace RoSharp
 
         public CheatEntry(Process process) 
         {
-            robloxLuaState = new RobloxLua(process, new IntPtr(0x300000));
+            robloxLuaState = new RobloxLua(process, new IntPtr(0x110000));
             
         }
 
         public void Initialize()
         {
-            Console.WriteLine("Getfield {0:X}", Offsets.lua_getfield_address.AddressValue.ToInt32());
-            robloxLuaState.GetGlobal("print");
-            robloxLuaState.PushString("test");
-            robloxLuaState.Call(1, 0);
+            
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+                robloxLuaState.GetGlobal("print");
+                robloxLuaState.PushString(input);
+                robloxLuaState.Call(1, 0);
+            }
         }
     }
 }

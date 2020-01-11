@@ -5,7 +5,7 @@ namespace RoSharp.Memory
 {
     class Address
     {
-        public IntPtr AddressValue { get; private set; }
+        public IntPtr AddressValue;
         public CallingConventions CallingConvetion { get; private set; }
         public bool RemoveRetcheck { get; private set; }
         public bool IsLua { get; private set; }
