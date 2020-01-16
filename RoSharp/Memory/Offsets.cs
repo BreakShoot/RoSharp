@@ -7,11 +7,13 @@ namespace RoSharp.Memory
     {
         public static Dictionary<string, Address> GlobalAddressTable = new Dictionary<string, Address>()
         {
-            {"ScriptContext", new Address(0x188B89C, CallingConventions.Cdecl, false, false)},
-            {"GetField", new Address(0x4BCFA0, CallingConventions.Cdecl)},
-            {"PushString", new Address(0x4BE580, CallingConventions.Fastcall, false)},
-            {"SetField", new Address(0x4BF050, CallingConventions.Fastcall)},
-            {"Call", new Address(0x4BC9E0, CallingConventions.Cdecl)}
+            {"ScriptContext", new Address(0x22B1E8C, CallingConventions.Cdecl, false, false)},
+            {"GetField", new Address(0xEDE9C0, CallingConventions.Cdecl)},
+            {"PushString", new Address(0xEDFEB0, CallingConventions.Stdcall, false)},
+            {"SetField", new Address(0xEE0980, CallingConventions.Cdecl)},
+            {"Call", new Address(0xEDE410, CallingConventions.Cdecl)},
+            {"Index2Adr", new Address(0xED6EE0, CallingConventions.Cdecl, false) },
+            {"PushNumber", new Address(0xEDFE30, CallingConventions.Cdecl) }
         };
     }
 }

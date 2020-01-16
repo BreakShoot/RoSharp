@@ -7,23 +7,23 @@ namespace RoSharp
 {
     class CheatEntry
     {
-        private readonly RobloxLua robloxLuaState;
+        private static RobloxLua robloxLuaState;
 
         public CheatEntry(Process process) 
         {
-            robloxLuaState = new RobloxLua(process, new IntPtr(0x110000));
+            robloxLuaState = new RobloxLua(process, new IntPtr(0xB30000));
             
         }
 
         public void Initialize()
         {
-            //printidentity
+            ////printidentity
             robloxLuaState.SetIdentity(6);
             robloxLuaState.GetGlobal("spawn");
             robloxLuaState.GetGlobal("printidentity");
             robloxLuaState.Call(1, 0);
 
-            //example forcefield
+            ////example forcefield
             robloxLuaState.GetGlobal("Instance");
             robloxLuaState.GetField(-1, "new");
             robloxLuaState.PushString("ForceField");
@@ -34,6 +34,13 @@ namespace RoSharp
             robloxLuaState.GetField(-1, "LocalPlayer");
             robloxLuaState.GetField(-1, "Character");
             robloxLuaState.SetField(-5, "Parent");
+
+
+            robloxLuaState.PushString("new string");
+            Console.WriteLine(robloxLuaState.ToString(-1));
+
+            //char.Humanoid.Health = 500
+            //test
         }
     }
 }

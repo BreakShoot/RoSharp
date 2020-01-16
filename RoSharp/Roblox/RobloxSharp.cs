@@ -162,7 +162,7 @@ namespace RoSharp.Roblox
 
             if (scriptContextPtr != IntPtr.Zero)
             {
-                IntPtr LuaState = (IntPtr)(IntPtr.Add(scriptContextPtr, 172).ToInt32() ^ this[scriptContextPtr + 172, false].Read<int>());
+                IntPtr LuaState = (IntPtr)(IntPtr.Add(scriptContextPtr, 172).ToInt32() - this[scriptContextPtr + 172, false].Read<int>());
 #if DEBUG_ROBLOX
                 Logger.Log(Logger.LogType.SUCCESS, "Successfully grabbed LuaState! LS: 0x{0:X}", LuaState.ToInt32());
 #endif
@@ -173,7 +173,7 @@ namespace RoSharp.Roblox
 #if DEBUG_ROBLOX
                 Logger.Log(Logger.LogType.ERROR, "Failed to grab LuaState");
 #endif
-                return (IntPtr)0;
+                return IntPtr.Zero;
             }            
         }
 
